@@ -21,4 +21,19 @@
 | pr-template-generator | Generate PR descriptions | commits | pr_body |
 | full-lifecycle-orchestrator-wrapper | Orchestrate full build | project_type, phases | execution_plan |
 
-**Total: 18 skills**
+## Browser Skills
+
+| Skill | Purpose | Input | Output |
+|-------|---------|-------|--------|
+| rendered-html-fetcher | Get JS-rendered DOM | url, wait_for | html, metadata |
+| dom-extractor | Extract via selectors | url, selectors | extracted, evidence |
+| jsonld-schema-extractor | Validate schema | url, types | schemas, consistency |
+| site-crawler | Multi-page crawl | seed_url, rules | pages[], index |
+| page-anatomy-extractor | Full page structure | url | anatomy, hierarchy |
+| llm-crawl-simulator | Raw vs rendered | url | coverage_gap, risks |
+| dataset-generator | Site → JSONL | seed_url, selectors | dataset.jsonl |
+| web-to-tools-generator | DOM → TypeScript | url, element_types | tools.ts |
+| scrape-to-openapi-generator | Web → OpenAPI | url, selectors | openapi.yaml |
+| post-deploy-validator | Post-deploy QA | url, checks | regression_report |
+
+**Total: 28 skills (18 core + 10 browser)**

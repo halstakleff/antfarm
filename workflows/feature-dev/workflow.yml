@@ -82,6 +82,28 @@ agents:
         SOUL.md: agents/reviewer/SOUL.md
         IDENTITY.md: agents/reviewer/IDENTITY.md
 
+# BROWSER AGENT LAYER (ADDED FEB 2026)
+  - id: browser-validator
+    name: Browser Validator
+    role: analysis
+    description: Runs DOM extraction, schema validation, and post-deploy regression checks.
+    workspace:
+      baseDir: agents/browser-validation-agent
+      skills:
+        - renders-html-fetcher
+        - dom-extractor
+        - jsonld-schema-extractor
+        - site-crawler
+        - page-anatomy-extractor
+        - llm-crawl-simulator
+        - dataset-generator
+        - post-deploy-validator
+      files:
+        AGENTS.md: agents/browser-validation-agent/AGENTS.md
+        SOUL.md: agents/browser-validation-agent/SOUL.md
+        IDENTITY.md: agents/browser-validation-agent/IDENTITY.md
+        instructions.md: agents/browser-validation-agent/instructions.md
+
 # SUPER CODING TEAM SUB-AGENTS (ADDED FEB 2026)
   - id: architect
     name: Architect
@@ -547,6 +569,27 @@ skill_registry:
     path: skills/pr-template-generator/SKILL.md
   - id: full-lifecycle-orchestrator-wrapper
     path: skills/full-lifecycle-orchestrator-wrapper/SKILL.md
+  # Browser Layer Skills (ADDED FEB 2026)
+  - id: rendered-html-fetcher
+    path: skills/browser/rendered-html-fetcher/SKILL.md
+  - id: dom-extractor
+    path: skills/browser/dom-extractor/SKILL.md
+  - id: jsonld-schema-extractor
+    path: skills/browser/jsonld-schema-extractor/SKILL.md
+  - id: site-crawler
+    path: skills/browser/site-crawler/SKILL.md
+  - id: page-anatomy-extractor
+    path: skills/browser/page-anatomy-extractor/SKILL.md
+  - id: llm-crawl-simulator
+    path: skills/browser/llm-crawl-simulator/SKILL.md
+  - id: dataset-generator
+    path: skills/browser/dataset-generator/SKILL.md
+  - id: web-to-tools-generator
+    path: skills/browser/web-to-tools-generator/SKILL.md
+  - id: scrape-to-openapi-generator
+    path: skills/browser/scrape-to-openapi-generator/SKILL.md
+  - id: post-deploy-validator
+    path: skills/browser/post-deploy-validator/SKILL.md
 
 # Framework configuration
 framework:
