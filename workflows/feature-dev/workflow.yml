@@ -42,13 +42,12 @@ agents:
     description: Implements features, writes tests, creates PRs. Uses OpenCode CLI + Ralph loops.
     workspace:
       baseDir: agents/developer
-      skills:
-        - opencode-cli
-        - ralph-loop
       files:
         AGENTS.md: agents/developer/AGENTS.md
         SOUL.md: agents/developer/SOUL.md
         IDENTITY.md: agents/developer/IDENTITY.md
+        RL_LOOP.md: agents/developer/RL_LOOP.md
+        ralph-loop.sh: agents/developer/ralph-loop.sh
 
   - id: verifier
     name: Verifier
@@ -56,9 +55,6 @@ agents:
     description: Quick sanity check with Microsoft RL scoring.
     workspace:
       baseDir: agents/verifier
-      skills:
-        - agent-browser
-        - ralph-loop
       files:
         AGENTS.md: ../../agents/shared/verifier/AGENTS.md
         SOUL.md: ../../agents/shared/verifier/SOUL.md
@@ -81,8 +77,6 @@ agents:
     description: Reviews PRs, requests changes or approves.
     workspace:
       baseDir: agents/reviewer
-      skills:
-        - agent-browser
       files:
         AGENTS.md: agents/reviewer/AGENTS.md
         SOUL.md: agents/reviewer/SOUL.md
@@ -109,9 +103,6 @@ agents:
     description: Web/codebase research, dependency analysis, pattern discovery.
     workspace:
       baseDir: agents/researcher
-      skills:
-        - opencode-cli
-        - ralph-loop
       files:
         AGENTS.md: agents/researcher/AGENTS.md
         SOUL.md: agents/researcher/SOUL.md
@@ -123,9 +114,6 @@ agents:
     description: Root-cause analysis, RL-scored performance/security audits.
     workspace:
       baseDir: agents/debugger-optimizer
-      skills:
-        - opencode-cli
-        - ralph-loop
       files:
         AGENTS.md: agents/debugger-optimizer/AGENTS.md
         SOUL.md: agents/debugger-optimizer/SOUL.md
@@ -138,9 +126,6 @@ agents:
     description: Tech Lead that uses OpenCode CLI, Ralph loops, and RL scoring.
     workspace:
       baseDir: agents/developer
-      skills:
-        - opencode-cli
-        - ralph-loop
       files:
         AGENTS.md: agents/developer/AGENTS.md
         SOUL.md: agents/developer/SOUL.md
