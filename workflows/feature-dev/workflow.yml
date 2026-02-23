@@ -368,6 +368,38 @@ steps:
       on_exhausted:
         escalate_to: human
 
+  - id: plankton-gate
+    agent: verifier
+    input: |
+      Run Plankton quality gates after code changes.
+
+      TASK: {{task}}
+      REPO: {{repo}}
+      BRANCH: {{branch}}
+      CHANGES: {{changes}}
+
+      Instructions:
+      1. Run quality gate: ./tools/quality/gate.sh --output outputs/quality/{{timestamp}}
+      2. Read quality_report.json
+      3. If S0 > 0 or S1 > 0: BLOCK and return remediation instructions
+      4. Print summary: S0, S1, S2, S3 counts
+      5. Calculate RL score: 95 if S0=0 and S1=0
+
+      Reply with:
+      STATUS: done|fail
+      GATE_STATUS: pass|fail
+      S0: <count>
+      S1: <count>
+      S2: <count>
+      S3: <count>
+      RL_SCORE: <0-100>
+      RECOMMENDATION: <fix instructions if failed>
+    expects: "GATE_STATUS: pass"
+    condition: "{{changes}} != ''"
+    on_fail:
+      retry_step: implement
+      max_retries: 3
+
   - id: test
     agent: tester
     input: |
@@ -590,6 +622,9 @@ skill_registry:
     path: skills/browser/scrape-to-openapi-generator/SKILL.md
   - id: post-deploy-validator
     path: skills/browser/post-deploy-validator/SKILL.md
+  # Plankton for OpenCode (ADDED FEB 2026)
+  - id: plankton-opencode-enforcer
+    path: skills/code/plankton-opencode-enforcer/SKILL.md
 
 # Framework configuration
 framework:
