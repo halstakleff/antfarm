@@ -1,0 +1,174 @@
+---
+id: universal-website-marketing
+name: Universal Website + Marketing OS
+version: 1.0.0
+description: |
+  Universal Website + Marketing + SEO + AIEO + Conversion Operating System.
+  
+  Core capabilities:
+  - High-converting website architecture
+  - SEO domination
+  - AIEO (LLM visibility)
+  - Structured data engineering
+  - Knowledge graph expansion
+  - Content flywheel
+  - Lead generation
+  - Conversion optimization
+  
+  All scripts enforce OpenCode CLI, Ralph loops, RL ≥95.
+
+polling:
+  model: default
+  timeoutSeconds: 14400
+
+agents:
+  - id: website-conversion
+    name: Website Conversion Agent
+    role: coding
+    description: Builds high-converting website sections with copy optimized per doctrine
+    workspace:
+      baseDir: agents/website
+      files:
+        SOUL.md: agents/website/SOUL.md
+        AGENTS.md: agents/website/AGENTS.md
+        IDENTITY.md: agents/website/IDENTITY.md
+
+  - id: seo-domination
+    name: SEO Domination Agent
+    role: coding
+    description: Executes SEO strategy and technical optimization
+    workspace:
+      baseDir: agents/seo
+      files:
+        SOUL.md: agents/seo/SOUL.md
+        IDENTITY.md: agents/seo/IDENTITY.md
+
+  - id: aieo-visibility
+    name: AIEO Visibility Agent
+    role: coding
+    description: Optimizes for LLM visibility and AI search
+    workspace:
+      baseDir: agents/aieo
+      files:
+        SOUL.md: agents/aieo/SOUL.md
+        IDENTITY.md: agents/aieo/IDENTITY.md
+
+  - id: content-swarm
+    name: Content Agent
+    role: coding
+    description: Executes content flywheel and distribution
+    workspace:
+      baseDir: agents/content
+      files:
+        SOUL.md: agents/content/SOUL.md
+        IDENTITY.md: agents/content/IDENTITY.md
+
+  - id: outreach-swarm
+    name: Outreach Agent
+    role: coding
+    description: Manages LinkedIn, cold email, lead generation
+    workspace:
+      baseDir: agents/outreach
+      files:
+        SOUL.md: agents/outreach/SOUL.md
+        IDENTITY.md: agents/outreach/IDENTITY.md
+
+  - id: analytics-cro
+    name: Analytics CRO Agent
+    role: coding
+    description: Tracks attribution, ROI, conversion optimization
+    workspace:
+      baseDir: agents/analytics
+      files:
+        SOUL.md: agents/analytics/SOUL.md
+        IDENTITY.md: agents/analytics/IDENTITY.md
+
+skills:
+  - id: copy-block-generator
+    reference: skills/writing/copy-block-generator/SKILL.md
+  - id: value-prop-clarifier
+    reference: skills/writing/value-prop-clarifier/SKILL.md
+  - id: pricing-page-optimizer
+    reference: skills/writing/pricing-page-optimizer/SKILL.md
+  - id: faq-objection-writer
+    reference: skills/writing/faq-objection-writer/SKILL.md
+  - id: proof-stack-builder
+    reference: skills/writing/proof-stack-builder/SKILL.md
+  - id: readability-clarity-checker
+    reference: skills/writing/readability-clarity-checker/SKILL.md
+  - id: brand-voice-enforcer
+    reference: skills/writing/brand-voice-enforcer/SKILL.md
+
+rl_config:
+  threshold: 95
+  loop_type: ralph
+  max_iterations: 5
+
+steps:
+  - id: setup
+    agent: planner
+    input: |
+      Setup project for {{task}}.
+      
+      Checklist:
+      1. Create project directory structure
+      2. Initialize marketing KB files
+      3. Set up RL tracking
+      4. Validate writing doctrine loaded
+      
+      Reply with STATUS: done
+    expects: "STATUS: done"
+
+  - id: website-foundation
+    agent: website-conversion
+    input: |
+      Build high-converting website foundation for {{task}}.
+      
+      Requirements:
+      - All copy validated against writing doctrine
+      - Hero has transformation focus
+      - Pricing uses psychology framework
+      - Schema implemented
+      - RL score ≥95 for each section
+      
+      Reply with STATUS, RL scores per section.
+    expects: "STATUS: done"
+    loop_type: ralph
+    rl_threshold: 95
+
+  - id: seo-optimization
+    agent: seo-domination
+    input: |
+      Execute SEO strategy for {{task}}.
+      Target: Technical score ≥90, all pages pass Core Web Vitals.
+      Reply with STATUS, scores.
+    expects: "STATUS: done"
+    loop_type: ralph
+    rl_threshold: 95
+
+  - id: aieo-optimization
+    agent: aieo-visibility
+    input: |
+      Optimize for LLM visibility per {{task}}.
+      Target: Entity consistency 100%, citations present.
+      Reply with STATUS, entity map, citation report.
+    expects: "STATUS: done"
+    loop_type: ralph
+    rl_threshold: 95
+
+  - id: final-validation
+    agent: analytics-cro
+    input: |
+      Final validation.
+      Validate all RL scores ≥95.
+      Update PROJECT_KB.md, MARKETING_KB.md, ENTITY_MAP.md.
+      
+      REPLY FORMAT:
+      RL_SCORE: {{total}}
+      WEBSITE: High-converting
+      SEO: Optimized
+      AIEO: LLM-visible
+      SCHEMA: Implemented
+    expects: "RL_SCORE:"
+    loop_type: ralph
+    rl_threshold: 95
