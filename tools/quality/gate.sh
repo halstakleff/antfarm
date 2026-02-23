@@ -546,4 +546,4 @@ if [ "${1:-}" = "--output" ]; then
 fi
 
 # Run main
-main "${@}"
+main "${@:-}"
