@@ -503,3 +503,76 @@ steps:
       max_retries: 3
       on_exhausted:
         escalate_to: human
+
+
+# -----------------------------------------------------------------------------
+# BATCH 7: SKILL INTEGRATION (ADDED FEB 2026)
+# -----------------------------------------------------------------------------
+
+# Reference skills available to agents
+skill_registry:
+  - id: universal-framework-loader
+    path: skills/universal-framework-loader/SKILL.md
+  - id: ralph-loop-with-rl-scoring
+    path: skills/ralph-loop-with-rl-scoring/SKILL.md
+  - id: opencode-cli-master
+    path: skills/opencode-cli-master/SKILL.md
+  - id: invariant-enforcer
+    path: skills/invariant-enforcer/SKILL.md
+  - id: openapi-generator
+    path: skills/openapi-generator/SKILL.md
+  - id: diagram-generator
+    path: skills/diagram-generator-mermaid-plantuml/SKILL.md
+  - id: git-workflow-enforcer
+    path: skills/git-workflow-enforcer/SKILL.md
+  - id: security-scan-orchestrator
+    path: skills/security-scan-orchestrator/SKILL.md
+  - id: performance-profiler
+    path: skills/performance-profiler/SKILL.md
+  - id: a11y-auditor
+    path: skills/a11y-auditor/SKILL.md
+  - id: test-coverage-enforcer
+    path: skills/test-coverage-enforcer/SKILL.md
+  - id: doc-auto-generator
+    path: skills/doc-auto-generator/SKILL.md
+  - id: rollback-drill-simulator
+    path: skills/rollback-drill-simulator/SKILL.md
+  - id: rl-scoring-rubric-applier
+    path: skills/rl-scoring-rubric-applier/SKILL.md
+  - id: project-kb-updater
+    path: skills/project-kb-updater/SKILL.md
+  - id: sacred-document-validator
+    path: skills/sacred-document-validator/SKILL.md
+  - id: pr-template-generator
+    path: skills/pr-template-generator/SKILL.md
+  - id: full-lifecycle-orchestrator-wrapper
+    path: skills/full-lifecycle-orchestrator-wrapper/SKILL.md
+
+# Framework configuration
+framework:
+  path: framework/merged-universal-ai-assisted-software-build-framework.md
+  loader: universal-framework-loader
+  phases:
+    phase0: ideation, risk, invariants
+    phase1: requirements, scope, api, permissions
+    phase2: stack, data, state, concurrency
+    phase3: backend, data, observability, testing, ci-cd, guardrails
+    phase4: slice, swarm, commits
+    phase5: validation, integrity, security, safety
+    phase6: ui-state, ux
+    phase7: release, staging, production
+    phase8: monitoring, debt, quality
+
+# Execution mandates (non-negotiable)
+mandates:
+  opencode_cli_required: true
+  ralph_loops_required: true
+  rl_threshold: 95
+  sacred_docs_updated: true
+
+# Swarm configuration
+swarm:
+  max_depth: 2
+  max_sub_agents_per_parent: 3
+  merge_strategy: deduplicate
+  status_reporting: swimlane
