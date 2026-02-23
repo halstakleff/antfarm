@@ -1,3 +1,9 @@
+---
+name: opencode-cli
+description: "MANDATORY wrapper for ALL coding tasks. Never write raw code—always route through OpenCode CLI."
+user-invocable: false
+---
+
 # OpenCode CLI Skill
 
 MANDATORY wrapper for ALL coding tasks. Never write raw code—always route through OpenCode.

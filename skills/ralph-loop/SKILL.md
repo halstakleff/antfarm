@@ -1,3 +1,9 @@
+---
+name: ralph-loop
+description: "MANDATORY iteration wrapper with Microsoft RL scoring gates. Fresh context per iteration, loop until RL score >= 95."
+user-invocable: false
+---
+
 # Ralph Loop Skill
 
 MANDATORY iteration wrapper with Microsoft RL scoring gates.
