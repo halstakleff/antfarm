@@ -250,6 +250,30 @@ steps:
     expects: "STATUS: researched"
     max_retries: 1
 
+  - id: tiered-verify
+    agent: verifier
+    name: "Tiered Verification Gate"
+    description: Auto-detect FAST/STRICT, apply verification, block if required
+    input: |
+      TASK: {{task}}
+      FILES_CHANGED: {{changes}}
+
+      Run tiered verification gate:
+      1. Detect if task triggers FAST or STRICT mode
+      2. Determine required V-level (V1, V2, V3)
+      3. Check hash cache for redundant verification
+      4. Apply appropriate verification level
+      5. Assign severity (S0-S3) and confidence
+      6. STRICT mode requires artifact in outputs/verification/
+      7. If STRICT + no artifact: BLOCK
+      8. If S0 or S1: BLOCK with remediation
+
+      Output: verification_report.json with mode, v_level, severity, status
+    expects: "STATUS: verified"
+    on_fail:
+      retry_step: architect
+      max_retries: 2
+
   - id: implement
     agent: developer
     type: loop
@@ -625,6 +649,9 @@ skill_registry:
   # Plankton for OpenCode (ADDED FEB 2026)
   - id: plankton-opencode-enforcer
     path: skills/code/plankton-opencode-enforcer/SKILL.md
+  # Tiered Reliability Engine (ADDED FEB 2026)
+  - id: tiered-reliability-enforcer
+    path: skills/verification/tiered-reliability-enforcer/SKILL.md
 
 # Framework configuration
 framework:

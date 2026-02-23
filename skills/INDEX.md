@@ -21,6 +21,12 @@
 | pr-template-generator | Generate PR descriptions | commits | pr_body |
 | full-lifecycle-orchestrator-wrapper | Orchestrate full build | project_type, phases | execution_plan |
 
+## Verification Skills
+
+| Skill | Purpose | Input | Output |
+|-------|---------|-------|--------|
+| tiered-reliability-enforcer | Auto FAST/STRICT verification | task_text, files_changed | mode, v_level, status |
+
 ## Browser Skills
 
 | Skill | Purpose | Input | Output |
