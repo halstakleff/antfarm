@@ -2,16 +2,16 @@
 # session with clean context. Memory persists via git history and progress files.
 id: feature-dev
 name: Feature Development Workflow
-version: 5
+version: 6
 description: |
-  Story-based execution pipeline. Planner decomposes tasks into user stories.
-  Setup prepares the environment and establishes baseline.
-  Developer implements each story (with tests) in a fresh session. Verifier checks each story.
-  Then integration/E2E testing, PR creation, and code review.
+  SUPER CODING TEAM: Story-based execution with Ralph loops and Microsoft RL scoring.
+  Architect designs → Researcher explores → Developer (Tech Lead) builds with OpenCode CLI
+  → Debugger-Optimizer audits → Verifier checks with RL scoring.
+  Each agent uses Ralph loops, must achieve RL score >= 95.
 
 polling:
   model: default
-  timeoutSeconds: 120
+  timeoutSeconds: 10800
 
 agents:
   - id: planner
@@ -39,9 +39,12 @@ agents:
   - id: developer
     name: Developer
     role: coding
-    description: Implements features, writes tests, creates PRs.
+    description: Implements features, writes tests, creates PRs. Uses OpenCode CLI + Ralph loops.
     workspace:
       baseDir: agents/developer
+      skills:
+        - opencode-cli
+        - ralph-loop
       files:
         AGENTS.md: agents/developer/AGENTS.md
         SOUL.md: agents/developer/SOUL.md
@@ -50,11 +53,12 @@ agents:
   - id: verifier
     name: Verifier
     role: verification
-    description: Quick sanity check - did developer actually do the work?
+    description: Quick sanity check with Microsoft RL scoring.
     workspace:
       baseDir: agents/verifier
       skills:
         - agent-browser
+        - ralph-loop
       files:
         AGENTS.md: ../../agents/shared/verifier/AGENTS.md
         SOUL.md: ../../agents/shared/verifier/SOUL.md
@@ -83,6 +87,64 @@ agents:
         AGENTS.md: agents/reviewer/AGENTS.md
         SOUL.md: agents/reviewer/SOUL.md
         IDENTITY.md: agents/reviewer/IDENTITY.md
+
+# SUPER CODING TEAM SUB-AGENTS (ADDED FEB 2026)
+  - id: architect
+    name: Architect
+    role: architecture
+    description: High-level design, Mermaid diagrams, JSON story decomposition.
+    workspace:
+      baseDir: agents/architect
+      skills:
+        - opencode-cli
+        - ralph-loop
+      files:
+        AGENTS.md: agents/architect/AGENTS.md
+        SOUL.md: agents/architect/SOUL.md
+        IDENTITY.md: agents/architect/IDENTITY.md
+
+  - id: researcher
+    name: Researcher
+    role: research
+    description: Web/codebase research, dependency analysis, pattern discovery.
+    workspace:
+      baseDir: agents/researcher
+      skills:
+        - opencode-cli
+        - ralph-loop
+      files:
+        AGENTS.md: agents/researcher/AGENTS.md
+        SOUL.md: agents/researcher/SOUL.md
+        IDENTITY.md: agents/researcher/IDENTITY.md
+
+  - id: debugger-optimizer
+    name: Debugger-Optimizer
+    role: optimization
+    description: Root-cause analysis, RL-scored performance/security audits.
+    workspace:
+      baseDir: agents/debugger-optimizer
+      skills:
+        - opencode-cli
+        - ralph-loop
+      files:
+        AGENTS.md: agents/debugger-optimizer/AGENTS.md
+        SOUL.md: agents/debugger-optimizer/SOUL.md
+        IDENTITY.md: agents/debugger-optimizer/IDENTITY.md
+
+# Main developer enhanced with new skills
+  - id: developer-super
+    name: Developer (Super Team)
+    role: coding
+    description: Tech Lead that uses OpenCode CLI, Ralph loops, and RL scoring.
+    workspace:
+      baseDir: agents/developer
+      skills:
+        - opencode-cli
+        - ralph-loop
+      files:
+        AGENTS.md: agents/developer/AGENTS.md
+        SOUL.md: agents/developer/SOUL.md
+        IDENTITY.md: agents/developer/IDENTITY.md
 
 steps:
   - id: plan
@@ -144,6 +206,43 @@ steps:
     on_fail:
       escalate_to: human
 
+  - id: architect
+    agent: architect
+    input: |
+      Design system architecture and decompose into stories.
+      TASK: {{task}}
+
+      Instructions:
+      1. Explore existing codebase
+      2. Design architecture with Mermaid diagrams
+      3. Decompose into <500 LOC stories
+      4. Order by dependency
+      5. Create ARCHITECTURE.md
+      6. Use Ralph loops until RL score >= 95
+
+      Reply with STATUS: designed, ARCHITECTURE, STORIES_JSON, RL_SCORE
+    expects: "STATUS: designed"
+    max_retries: 2
+    rl_threshold: 95
+
+  - id: research
+    agent: researcher
+    input: |
+      Research codebase, dependencies, and patterns.
+      TASK: {{task}}
+
+      Instructions:
+      1. Map file structure and conventions
+      2. Research required APIs/libraries
+      3. Identify reusable patterns
+      4. Flag risks and unknowns
+      5. Create PROJECT_KB.md
+      6. Use Ralph loops
+
+      Reply with STATUS: researched, PROJECT_KB, PATTERNS, DEPENDENCIES, RISKS, RL_SCORE
+    expects: "STATUS: researched"
+    max_retries: 1
+
   - id: implement
     agent: developer
     type: loop
@@ -153,6 +252,9 @@ steps:
       fresh_session: true
       verify_each: true
       verify_step: verify
+      loop_type: ralph
+      rl_threshold: 95
+      max_iterations: 5
     input: |
       Implement the following user story. You are working on ONE story in a fresh session.
 
@@ -297,6 +399,35 @@ steps:
       max_retries: 2
       on_exhausted:
         escalate_to: human
+
+  - id: debug-optimize
+    agent: debugger-optimizer
+    input: |
+      Perform root-cause analysis and RL-scored optimization.
+
+      TASK: {{task}}
+      REPO: {{repo}}
+      BRANCH: {{branch}}
+      CHANGES: {{changes}}
+      TEST_RESULTS: {{results}}
+
+      Instructions:
+      1. Analyze test results for failures
+      2. Check for performance bottlenecks
+      3. Security review (OWASP top 10)
+      4. Code quality audit
+      5. Propose fixes with RL scores
+      6. Update PROJECT_KB.md with findings
+
+      Reply with:
+      STATUS: analyzed
+      ISSUES: [list]
+      FIXES: [{approach, rl_score, tradeoffs}]
+      RECOMMENDED: approach
+      RL_SCORE: <number>
+    expects: "STATUS: analyzed"
+    max_retries: 2
+    rl_threshold: 90
 
   - id: pr
     agent: developer

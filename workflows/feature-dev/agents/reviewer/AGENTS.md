@@ -101,3 +101,7 @@ As a reviewer, your visual inspection focuses on **polish and design quality**, 
 ## Learning
 
 Before completing, if you learned something about reviewing this codebase, update your AGENTS.md or memory.
+
+## Context Bridging
+
+Before ending, write progress.md documenting what's been reviewed and what remains.

@@ -1,0 +1,105 @@
+id: ui-ux-design
+name: UI/UX Design & Implementation
+version: 1
+description: |
+  Two-phase workflow for production-ready UI/UX:
+  Phase 1: UI/UX Architect creates detailed design specs
+  Phase 2: Lead Frontend Engineer implements with shadcn/ui, Magic UI, and tests
+
+polling:
+  model: default
+  timeoutSeconds: 180
+
+agents:
+  - id: architect
+    name: UI/UX Architect
+    role: analysis
+    description: Creates detailed design specs with shadcn components and animations
+    workspace:
+      baseDir: agents/architect
+      files:
+        AGENTS.md: agents/architect/AGENTS.md
+        SOUL.md: agents/architect/SOUL.md
+        IDENTITY.md: agents/architect/IDENTITY.md
+
+  - id: engineer
+    name: Lead Frontend Engineer
+    role: coding
+    description: Implements design specs with shadcn/ui, Tailwind, and Framer Motion
+    workspace:
+      baseDir: agents/engineer
+      skills:
+        - agent-browser
+      files:
+        AGENTS.md: agents/engineer/AGENTS.md
+        SOUL.md: agents/engineer/SOUL.md
+        IDENTITY.md: agents/engineer/IDENTITY.md
+
+steps:
+  - id: design-spec
+    name: Create Design Specification
+    agent: architect
+    input: |
+      Review the following UI/UX request for Fork+ CRM and create a detailed Design Spec.
+      
+      REQUEST:
+      {{task}}
+      
+      Current tech stack:
+      - React + Vite + TypeScript
+      - Tailwind CSS
+      - shadcn/ui components (some already installed)
+      - Framer Motion for animations
+      - Lucide React for icons
+      - Laravel API backend
+      - Project root: /Users/nit/.openclaw/workspace/mission-control/crm
+      
+      Available references:
+      - shadcn/ui: https://github.com/shadcn-ui/ui
+      - Magic UI: https://github.com/magicuidesign/magicui
+      - Aceternity: https://github.com/aceternity/saasternity
+      - Lucide Icons: https://github.com/lucide-icons/lucide
+      
+      Create a comprehensive Design Spec including:
+      1. Layout structure
+      2. Exact shadcn components to use
+      3. Magic UI/Aceternity animations
+      4. Interactive states (hover, focus, loading)
+      5. Responsive breakpoints
+      6. Accessibility requirements
+      7. Lucide icons needed
+      
+      DO NOT write code - only the design plan.
+    expects: "Design Spec complete"
+    max_retries: 2
+    on_fail:
+      escalate_to: human
+
+  - id: implement
+    name: Implement UI
+    agent: engineer
+    dependsOn: [design-spec]
+    input: |
+      Implement the following Design Spec for Fork+ CRM:
+      
+      {{designSpec}}
+      
+      Current project: /Users/nit/.openclaw/workspace/mission-control/crm
+      
+      Requirements:
+      1. Read the Design Spec carefully
+      2. Check existing components in @/components/ui
+      3. Install any missing shadcn components: `npx shadcn-ui@latest add [component]`
+      4. Implement with React + TypeScript + Tailwind
+      5. Add Framer Motion animations per spec
+      6. Use Lucide icons
+      7. Ensure dark mode support (use tailwind `dark:`)
+      8. Create Playwright smoke test
+      9. Verify with Browser MCP if available
+      10. Ensure production-ready quality
+      
+      Provide all file changes needed with correct imports.
+    expects: "STATUS: done"
+    max_retries: 2
+    on_fail:
+      escalate_to: human

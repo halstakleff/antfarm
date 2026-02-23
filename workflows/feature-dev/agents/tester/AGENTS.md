@@ -60,3 +60,10 @@ Before completing, ask yourself:
 - Did I learn a testing pattern that worked well?
 
 If yes, update your AGENTS.md or memory.
+
+## Context Bridging
+
+Before ending your session, ALWAYS:
+1. Write progress to progress.md (what done, what remains)
+2. Commit with descriptive message
+3. Leave environment clean

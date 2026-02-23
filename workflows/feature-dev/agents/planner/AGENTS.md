@@ -112,3 +112,7 @@ STORIES_JSON: [
 - Don't create dependencies on later stories — order matters
 - Don't skip exploring the codebase — you need to understand the patterns
 - Don't exceed 20 stories — if you need more, the task is too big
+
+## Context Bridging
+
+Before ending, document stories in progress.md so next agent can pick up context.
