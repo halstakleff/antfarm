@@ -70,15 +70,21 @@ html=$(jq -r '.html' /tmp/page.json)
 echo "$html" | grep -oP '<script type="application/ld+json"[^\u003e]*\u003e\K[^\u003c]+' > /tmp/schemas.raw
 ```
 
-### Step 2: Parse and Validate
+### Step 2: Parse and Validate (OpenCode CLI)
 ```bash
 #!/bin/bash
-# Parse each JSON-LD block
+# Parse and validate each JSON-LD block
 
 opencode run --agent "schema-validator" \
   --input raw_schemas="/tmp/schemas.raw" \
   --input required_types='["Organization","WebPage","FAQPage"]' \
   --output schema_report.json
+
+# Validate output exists
+if [ ! -s schema_report.json ]; then
+  echo "ERROR: No schemas found or validation failed"
+  exit 1
+fi
 ```
 
 ### Step 3: Score Entity Consistency

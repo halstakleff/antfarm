@@ -80,10 +80,10 @@ echo "$rendered_html" > outputs/browser/$date/$slug/evidence/rendered.html
 echo "[STATUS] Rendered HTML fetched: ${#rendered_html} chars"
 ```
 
-### Step 3: Extract and Compare
+### Step 3: Extract and Compare (OpenCode CLI)
 ```bash
 #!/bin/bash
-# Extract content from both sources and compare
+# Extract content from both sources and compare using OpenCode CLI
 
 opencode run --agent "extraction-comparator" \
   --file task.yaml \

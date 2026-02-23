@@ -54,11 +54,20 @@ crawl_rules='{
 }'
 ```
 
-### Step 2: Execute Crawl
+### Step 2: Execute Crawl (OpenCode CLI)
 ```bash
-node /Users/nit/.openclaw/workspace/antfarm/tools/hyperbrowser/run.mjs crawl \
-  "$seed_url" \
-  "$crawl_rules" > /tmp/crawl_result.json
+# Use OpenCode CLI with browser agent
+opencode run --agent "browser-validator" \
+  --action "crawl" \
+  --url "$seed_url" \
+  --rules "$crawl_rules" \
+  --output /tmp/crawl_result.json
+
+# Verify crawl output
+if [ ! -f /tmp/crawl_result.json ]; then
+  echo "ERROR: Crawl failed"
+  exit 1
+fi
 ```
 
 ### Step 3: Extract Content

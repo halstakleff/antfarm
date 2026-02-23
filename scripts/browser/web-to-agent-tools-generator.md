@@ -41,16 +41,23 @@ Analyze any website to generate TypeScript functions that can interact with it: 
 
 ## Step-by-Step Execution
 
-### Step 1: Crawl and Extract
+### Step 1: Crawl and Extract (OpenCode CLI)
 ```bash
-# Get interactive elements
-node /Users/nit/.openclaw/workspace/antfarm/tools/hyperbrowser/run.mjs extract \
-  "$url" \
-  '{
+# Get interactive elements via OpenCode CLI
+opencode run --agent "browser-validator" \
+  --action "extract" \
+  --url "$url" \
+  --selectors '{
     "buttons": "button, [role=button], .btn",
     "inputs": "input[type=text], input[type=email], textarea",
     "forms": "form"
-  }' > /tmp/elements.json
+  }' \
+  --output /tmp/elements.json
+
+# Verify extraction
+if [ ! -s /tmp/elements.json ]; then
+  echo "WARNING: No interactive elements found"
+fi
 ```
 
 ### Step 2: Classify Elements

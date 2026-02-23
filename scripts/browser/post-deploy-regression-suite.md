@@ -41,11 +41,20 @@ Validate production deployment by checking: CTA elements, pricing, schema markup
 
 ## Step-by-Step Execution
 
-### Step 1: Fetch Page
+### Step 1: Fetch Page (OpenCode CLI)
 ```bash
-node /Users/nit/.openclaw/workspace/antfarm/tools/hyperbrowser/run.mjs render \
-  "$url" \
-  --wait=3000 > /tmp/page.json
+# Use OpenCode CLI to fetch rendered page
+opencode run --agent "browser-validator" \
+  --action "render" \
+  --url "$url" \
+  --wait=3000 \
+  --output /tmp/page.json
+
+# Verify output exists
+if [ ! -f /tmp/page.json ]; then
+  echo "ERROR: Failed to fetch page"
+  exit 1
+fi
 
 html=$(jq -r '.html' /tmp/page.json)
 ```

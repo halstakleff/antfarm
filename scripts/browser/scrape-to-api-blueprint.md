@@ -43,12 +43,20 @@ Convert a webpage's data structure into OpenAPI specifications, TypeScript clien
 
 ## Step-by-Step Execution
 
-### Step 1: Extract Structure
+### Step 1: Extract Structure (OpenCode CLI)
 ```bash
-node /Users/nit/.openclaw/workspace/antfarm/tools/hyperbrowser/run.mjs extract \
-  "$url" \
-  '{"results":".result-item","pagination":".pagination"}' \
-  > /tmp/data.json
+# Use OpenCode CLI for extraction
+opencode run --agent "browser-validator" \
+  --action "extract" \
+  --url "$url" \
+  --selectors '{"results":".result-item","pagination":".pagination"}' \
+  --output /tmp/data.json
+
+# Validate extraction
+if [ ! -s /tmp/data.json ]; then
+  echo "ERROR: No data extracted"
+  exit 1
+fi
 ```
 
 ### Step 2: Infer Schema
