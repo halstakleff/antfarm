@@ -213,6 +213,38 @@ steps:
     on_fail:
       escalate_to: human
 
+  - id: clawos-route
+    agent: planner
+    name: "ClawOS Router"
+    description: Low-token routing to ClawOS memory to set search scope
+    input: |
+      Route this task to appropriate ClawOS memory paths.
+
+      TASK: {{task}}
+
+      Instructions:
+      1. Determine task type (status/check/edit/deploy/write)
+      2. Set retrieval_mode (fast/normal/strict) based on task type
+      3. Identify allowed_paths from ClawOS high-signal folders
+      4. Set caps: maxResults (0/4/6), injectedCharCap (0/1400/2800)
+      5. Set write_policy (none/review-queue/approval)
+
+      Allowed paths:
+      - 00-Identity/
+      - 01-Operating-System/policies/
+      - 02-Projects/active/
+      - 03-Decisions/
+      - 06-Lessons/
+
+      Denied paths:
+      - 99-Archive/**
+      - 00-Inbox/quarantine/**
+
+      Reply with:
+      ROUTE: {allowed_paths, retrieval_mode, maxResults, injectedCharCap, write_policy}
+      STATUS: done
+    expects: "STATUS: done"
+
   - id: architect
     agent: architect
     input: |
@@ -652,6 +684,9 @@ skill_registry:
   # Tiered Reliability Engine (ADDED FEB 2026)
   - id: tiered-reliability-enforcer
     path: skills/verification/tiered-reliability-enforcer/SKILL.md
+  # ClawOS Memory Router (ADDED FEB 2026)
+  - id: clawos-router
+    path: skills/clawos-router/SKILL.md
 
 # Framework configuration
 framework:
