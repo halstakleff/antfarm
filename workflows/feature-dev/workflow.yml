@@ -90,7 +90,7 @@ agents:
     workspace:
       baseDir: agents/browser-validation-agent
       skills:
-        - renders-html-fetcher
+        - rendered-html-fetcher
         - dom-extractor
         - jsonld-schema-extractor
         - site-crawler
