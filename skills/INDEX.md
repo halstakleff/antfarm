@@ -43,3 +43,11 @@
 | post-deploy-validator | Post-deploy QA | url, checks | regression_report |
 
 **Total: 28 skills (18 core + 10 browser)**
+
+## Memory/Integration Skills
+
+| Skill | Purpose | Input | Output |
+|-------|---------|-------|--------|
+| clawos-router | Low-token routing to ClawOS | task_type, project, stakes | allowed_paths, mode, caps |
+
+**Total: 29 skills (18 core + 10 browser + 1 memory)**
